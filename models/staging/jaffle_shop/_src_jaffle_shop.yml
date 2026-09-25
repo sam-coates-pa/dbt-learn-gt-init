@@ -1,15 +1,25 @@
 sources:
   - name: jaffle_shop
+    description: A clone of a Postgres database containing data for a fictional online store called Jaffle Shop.
     database: raw
     schema: jaffle_shop
     tables:
       - name: customers
+        description: Raw list of all customers in the Jaffle Shop database.
         columns: 
           - name: id
+            description: Unique identifier for each customer (Primary Key)
             tests:
               - unique
               - not_null
       - name: orders
+        description: Raw list of all orders in the Jaffle Shop database.
+        columns:
+          - name: id
+            description: Unique identifier for each order (Primary Key)
+            tests:
+              - unique
+              - not_null
         config:
           freshness:
             warn_after:

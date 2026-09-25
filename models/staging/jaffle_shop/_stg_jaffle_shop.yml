@@ -1,23 +1,29 @@
 models:
   - name: stg_jaffle_shop_customers
+    description: one unique customer per row, with first and last name
     columns:
       - name: customer_id
+        description: Unique identifier for each customer (Primary Key)
         tests:
           - unique
           - not_null
 
   - name: stg_jaffle_shop_orders
+    description: one unique order per row, with order details
     columns:
       - name: order_id
+        description: Unique identifier for each order (Primary Key)
         tests:
           - unique
           - not_null
       - name: status
+        description: "{{ doc('order_status') }}"
         tests:
           - accepted_values:
               arguments:
                 values: ['placed', 'shipped', 'completed', 'returned', 'return_pending']
       - name: customer_id
+        description: Unique identifier for each customer (Foreign Key)
         tests:
           - relationships:
               arguments:
