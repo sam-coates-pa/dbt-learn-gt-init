@@ -34,5 +34,8 @@ paid_orders as (
     completed_payments.total_amount_paid,
     completed_payments.payment_finalized_date
   from orders
- left join completed_payments on orders.order_id = completed_payments.order_id
+  left join completed_payments on orders.order_id = completed_payments.order_id
+
 )
+
+select * from paid_orders
