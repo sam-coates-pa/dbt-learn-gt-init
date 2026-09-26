@@ -1,0 +1,11 @@
+seeds:
+  - name: employees
+    description: "A list of employees and their associated customer IDs."
+    columns:
+      - name: employee_id
+        description: "Unique identifier for each employee (Primary Key)."
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "Identifier for the customer associated with the employee."

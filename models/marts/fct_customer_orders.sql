@@ -11,13 +11,16 @@ orders as (
   select * from {{ ref('int_orders') }}
 ),
 
+employees as (
+  select * from {{ ref('employees') }}
+),
 ----------------------
 customer_orders as (
   select
     orders.*,
-    customers.fullname,
-    customers.surname,
-    customers.given_name,
+    customers.customer_first_name,
+    customers.customer_last_name,
+    customers.full_name,
 
     -- customer level aggrreations
      
@@ -25,7 +28,7 @@ customer_orders as (
   from orders
   inner join customers 
   on customers.customer_id = orders.customer_id
-)
+),
 ----------------------
 
 -- Marts
@@ -47,6 +50,7 @@ final as (
     paid_orders.payment_finalized_date,
     customers.customer_first_name,
     customers.customer_last_name,
+    employees.employee_id,
 
     -- sales transaction sequence
     row_number() over (order by paid_orders.order_placed_at, paid_orders.order_id) as transaction_seq,
@@ -80,6 +84,8 @@ final as (
       ) as fdos
     from paid_orders
     left join customers on paid_orders.customer_id = customers.customer_id
+    left join employees on paid_orders.customer_id = employees.customer_id
+
 )
 
 select * from final
